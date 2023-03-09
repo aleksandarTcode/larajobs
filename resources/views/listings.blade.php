@@ -1,4 +1,8 @@
 <x-layout />
+
+@include('partials._hero')
+@include('partials._search')
+
 <div
     class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4"
 >
@@ -15,7 +19,7 @@
                     />
                     <div>
                         <h3 class="text-2xl">
-                            <a href="/listing/{{ $listing->id }}">{{ $listing->title }}</a>
+                            <a href="/listings/{{ $listing->id }}">{{ $listing->title }}</a>
                         </h3>
                         <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
                         <ul class="flex">
