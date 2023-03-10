@@ -1,6 +1,6 @@
 @props(['listing'])
 
-<x-card>
+<x-card class="p-6">
     <div class="flex">
         <img
             class="hidden w-48 mr-6 md:block"
