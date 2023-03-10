@@ -42,6 +42,10 @@ class ListingController extends Controller
             'description' => 'required',
         ]);
 
+        if($request->hasFile('logo')){
+            $attributes['logo'] = $request->file('logo')->store('logos','public');
+        }
+
         Listing::create($attributes);
 
         return redirect('/')->with('message', 'Listing created successfully!');
