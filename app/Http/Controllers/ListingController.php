@@ -46,6 +46,8 @@ class ListingController extends Controller
             $attributes['logo'] = $request->file('logo')->store('logos','public');
         }
 
+        $attributes['user_id'] = auth()->id();
+        
         Listing::create($attributes);
 
         return redirect('/')->with('message', 'Listing created successfully!');
