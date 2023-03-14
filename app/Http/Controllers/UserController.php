@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -27,5 +28,39 @@ class UserController extends Controller
 
         return redirect('/')->with('message', 'User created and logged in!');
 
+    }
+
+    public function destroy()
+    {
+        auth()->logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'Goodbye!');
+    }
+
+    public function login()
+    {
+        return view('users.login');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $attributes = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (! auth()->attempt($attributes)) {
+            throw ValidationException::withMessages([
+                'email' => 'Your provided credentials could not be verified.'
+            ]);
+
+        }
+
+        session()->regenerate();
+
+        return redirect('/')->with('message','Welcome Back!');
     }
 }
