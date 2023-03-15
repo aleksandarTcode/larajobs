@@ -57,19 +57,14 @@ class ListingController extends Controller
     public function edit(Listing $listing)
     {
 
-        if($listing->user_id != auth()->id())
-        {
-            abort(403, 'Unauthorized Action');
-        }
+        $this->auth_check($listing);
+
         return view('listings.edit', ['listing' => $listing]);
     }
 
     public function update(Request $request, Listing $listing)
     {
-        if($listing->user_id != auth()->id())
-        {
-            abort(403, 'Unauthorized Action');
-        }
+        $this->auth_check($listing);
 
         $attributes = $request->validate([
             'title' => 'required',
@@ -94,10 +89,7 @@ class ListingController extends Controller
     public function destroy(Listing $listing)
     {
 
-        if($listing->user_id != auth()->id())
-        {
-            abort(403, 'Unauthorized Action');
-        }
+        $this->auth_check($listing);
 
         $listing->delete();
 
@@ -108,6 +100,14 @@ class ListingController extends Controller
     {
         return view('listings.manage',['listings'=>auth()->user()->listings()->get()]);
 
+    }
+
+    protected function auth_check(Listing $listing)
+    {
+        if($listing->user_id != auth()->id())
+        {
+            abort(403, 'Unauthorized Action');
+        }
     }
 }
 
