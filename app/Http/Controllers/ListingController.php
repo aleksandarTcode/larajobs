@@ -47,7 +47,7 @@ class ListingController extends Controller
         }
 
         $attributes['user_id'] = auth()->id();
-        
+
         Listing::create($attributes);
 
         return redirect('/')->with('message', 'Listing created successfully!');
@@ -86,6 +86,12 @@ class ListingController extends Controller
         $listing->delete();
 
         return redirect('/')->with('message', 'Listing deleted!');
+    }
+
+    public function manage()
+    {
+        return view('listings.manage',['listings'=>auth()->user()->listings()->get()]);
+
     }
 }
 
