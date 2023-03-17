@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAuthController;
 use App\Models\Listing;
 use App\Http\Controllers\ApiListingController;
 use Illuminate\Http\Request;
@@ -15,22 +16,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/register', [ApiAuthController::class, 'register']);
+Route::post('/login', [ApiAuthController::class, 'login']);
+
 Route::get('/listings', [ApiListingController::class, 'index']);
-
-Route::post('/listings',[ApiListingController::class, 'store']);
-
 Route::get('listings/{listing}',[ApiListingController::class, 'show']);
-
-Route::put('listings/{listing}',[ApiListingController::class, 'update']);
-
-Route::delete('listings/{listing}', [ApiListingController::class, 'destroy']);
-
 Route::get('listings/search/{name}', [ApiListingController::class, 'search']);
 
 
+// Protected routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/listings',[ApiListingController::class, 'store']);
+    Route::put('listings/{listing}',[ApiListingController::class, 'update']);
+    Route::delete('listings/{listing}', [ApiListingController::class, 'destroy']);
 
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::post('/logout', [ApiAuthController::class,'logout']);
 });
+
+

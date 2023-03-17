@@ -15,9 +15,9 @@ class ApiListingController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate([
+            $attributes = $request->validate([
                 'title' => 'required',
-                'user_id' => 'required',
+
                 'company' => 'required|unique:listings,company',
                 'location' => 'required',
                 'website' => 'required',
@@ -26,7 +26,8 @@ class ApiListingController extends Controller
                 'description' => 'required',
             ]);
 
-            return Listing::create($request->all());
+            $attributes['user_id'] = auth()->id();
+            return Listing::create($attributes);
         }
         catch (\Exception $exception)
         {
