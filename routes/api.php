@@ -28,7 +28,7 @@ Route::get('listings/search/{name}', [ApiListingController::class, 'search']);
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/listings',[ApiListingController::class, 'store']);
-    Route::put('listings/{listing}',[ApiListingController::class, 'update']);
+    Route::put('listings/{id}',[ApiListingController::class, 'update']);
     Route::delete('listings/{listing}', [ApiListingController::class, 'destroy']);
 
     Route::post('/logout', [ApiAuthController::class,'logout']);

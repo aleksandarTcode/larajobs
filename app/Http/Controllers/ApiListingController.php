@@ -40,12 +40,14 @@ class ApiListingController extends Controller
         return $listing;
     }
 
-    public function update(Request $request, Listing $listing)
+    public function update(Request $request,$id)
     {
 
-        return $listing->update($request->all());
+        Listing::find($id)->update($request->all());
+        return Listing::find($id);
 
     }
+
 
     public function destroy(Listing $listing)
     {
