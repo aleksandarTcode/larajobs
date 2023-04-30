@@ -42,7 +42,7 @@ Run the webserver on port 8000:
 php artisan serve
 ```
 
-## API Usage
+## API Usage 
 
 
 ### This API provides the following endpoints:
